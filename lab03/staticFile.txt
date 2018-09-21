@@ -1,0 +1,2 @@
+this is a static file.
+it's in exercise 3.2

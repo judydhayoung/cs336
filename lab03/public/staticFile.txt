@@ -1,0 +1,3 @@
+this is a static file.
+it's in exercise 3.2
+i made edits to this file while the server was up

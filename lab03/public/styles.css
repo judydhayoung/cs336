@@ -1,0 +1,13 @@
+.header-information {
+  background-color: yellow;
+  font-size: 20;
+}
+
+h1 {
+    display: block;
+    font-size: 2em;
+    margin-top: 0.67em;
+    margin-left: 10;
+    margin-right: 0;
+    font-weight: bold;
+}
