@@ -1,0 +1,153 @@
+/*** CSS Tutorial: Color page ***/
+
+/* page font */
+body {
+  font: 16px "Courier", cursive;
+  background: url("Blue-rule.png");
+}
+
+/* paragraphs */
+p {
+  color: #00f;
+}
+
+p::before{
+  content: url("yellow-pin.png");
+}
+
+#first {
+  font-style: italic;
+}
+
+/* initial letters */
+strong {
+  background-color: #ddf;
+  color: #f00;
+  font: 200% serif;
+}
+
+/* .carrot { color: #fa0; } */
+
+.spinach {
+  color: #080;
+  background-color: #ddf;
+}
+
+/*** Lists ***/
+
+/* numbered paragraphs */
+/* h3.numbered {counter-reset: upper-alpha;}
+
+p.numbered:before {
+  list-style-type: upper-alpha;
+  content: "(" counter(upper-alpha) ") ";
+  counter-increment: upper-alpha;
+} */
+
+li {
+  list-style-type: lower-roman;
+  margin-bottom: 8px;
+}
+
+/* numbered headings */
+body {
+  counter-reset: headnum;
+}
+
+#numbered p:before {
+  content: "(" counter(headnum, upper-latin) ") ";
+  counter-increment: headnum;
+}
+
+/*** border ***/
+
+h3 {border-top: 1px solid gray;}
+
+ul, #numbered {
+  border: 1em solid #69b;
+  padding-right:1em;
+  padding-left: 70px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 280px;
+}
+
+#fixed-pin {
+  position:fixed;
+  top: 0;
+  right: 0;
+}
+
+
+/*** table ***/
+table {
+  background-color: #e5f8e5;
+  /* border-color: #32ae00; */
+  border: .1em solid green;
+  padding-left: 20px;
+  padding-right: 0px;
+  font-family: Verdana;
+  border-collapse: collapse;
+}
+
+/* area and mean depth */
+thead tr:first-child {
+  color: blue;
+  font-weight: bold;
+}
+.superscript {
+  vertical-align: super;
+}
+
+/* description of million km2 and m */
+thead tr:nth-child(2) {
+  color: gray;
+  font-style: italic;
+  font-size: small;
+  text-align: right;
+}
+
+tbody th:first-child{
+  font-weight: bold;
+  text-align: right;
+  background-color: inherit;
+  padding-right: 20px;
+}
+
+/* last two rows in blue */
+#total, #mean {
+  font-weight: bold;
+}
+
+#total th, #mean th{
+  color: blue;
+}
+
+#total td, #mean td{
+  background-color: #13cb6f;
+  border: none;
+}
+
+#total td {
+  border-top: .3em solid #11b4b3;
+}
+
+th, td {
+    padding: 10px;
+}
+
+tbody td {
+  background-color: #d5e1ff;
+  border-color: #32ae00;
+  border-style: solid;
+  border-width: .3px;
+  padding: 0px;
+  text-align: right;
+}
+
+
+tfoot {
+  text-align: right;
+  font-weight: lighter;
+  font-style: italic;
+}
