@@ -1,0 +1,82 @@
+gray-border = 2px solid #303030
+box-padding = 30px
+dark-gray-background = #999999
+
+body
+    font: 24px Helvetica
+    background: dark-gray-background
+
+#main
+    min-height: 800px
+    margin: 0px
+    padding: 0px
+    display: flex
+    flex-flow: row
+    //nesting for main article
+    article
+      padding: 30px
+      border: gray-border
+      background: #dddd88
+      flex: 3 1 60%
+      order: 2
+    //nesting for #main nav
+    nav
+      padding: 30px
+      border: gray-border
+      background: #ccccff
+      flex: 1 6 20%
+      order: 1
+      text-align: right
+    //nesting for #main aside
+    aside
+      padding: 30px
+      border: gray-border
+      background: #ccccff
+      flex: 1 6 20%
+      order: 3
+      font-style: italic // font for aside is different
+
+header
+footer
+    min-height: 100px
+    display: block
+    padding: 20px  0px 0px 30px
+    border: gray-border
+    background: #ffeebb
+
+
+header p
+  font-size: 180%
+  font-weight: bold
+
+// font size  for footer is smaller
+footer
+  font-size: 75%
+
+
+// Too narrow to support three columns
+@media all and (max-width: 640px)
+    #main, #page
+        flex-direction: column
+/*!
+* Return them to document order
+*    #main > article, #main > nav, #main > aside
+*        order: 0
+*/
+    #main > nav
+      order: 1
+      /* navigation links are left aligned on mobile */
+      text-align: left
+
+    #main > article
+      order: 2
+
+    #main > aside
+      order: 3
+
+    #main > nav
+    #main > aside
+    header
+    footer
+        min-height: 50px
+        max-height: 50px
