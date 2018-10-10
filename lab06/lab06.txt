@@ -1,0 +1,15 @@
+exercise 1
+1. Identify the request methods that you can and can’t test using the two tools listed above.
+If a method cannot be testing using a particular tool, explain why this is the case.
+List the Curl commands you used successfully.
+
+2. What is the most appropriate HTTP response code for pages that aren’t defined by an Express route?
+
+
+exercise 2
+1. What HTTP methods do forms support?
+2. How is the form data being passed back to the server and what syntactic form does it take? Is the data modified in any way?
+
+
+curl -X PUT http://localhost:3000/request -d '{"arg": "value"}' -H 'Content-Type: application/json'
+curl -X GET http://localhost:3000/request -d '{"arg": "value"}' -H 'Content-Type: application/json'
