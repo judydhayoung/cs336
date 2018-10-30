@@ -1,0 +1,32 @@
+[
+  {
+  "firstName":"Moses",
+  "lastName":"Bloch",
+  "loginID": "mbloch",
+  "startDate": "2010-06-28"
+},
+{
+  "firstName":"Marissa",
+  "lastName":"Hardrick",
+  "loginID": "mhardrick",
+  "startDate": "2012-12-27"
+},
+{
+  "firstName":"Claudette",
+  "lastName":"Ferrel",
+  "loginID": "cferrel",
+  "startDate": "2013-10-02"
+},
+{
+  "firstName":"Giovanni",
+  "lastName":"Jump",
+  "loginID": "gjump",
+  "startDate": "2016-01-13"
+},
+{
+  "firstName":"Lucille",
+  "lastName":"Bran",
+  "loginID": "lbran",
+  "startDate": "2013-11-28"
+}
+]
