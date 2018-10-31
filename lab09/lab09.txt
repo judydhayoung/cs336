@@ -1,0 +1,7 @@
+What good has this bundling done? How big is the new bundle file? Check the Chrome DevTools network log to see what files are being loaded.
+
+What role did Babel play in the bundling?
+
+Can you just load file:///path…/index.html using the browser? Why or why not?
+In webpack.config.js, what does the loader test entry test: /\.jsx?$/ do?
+Save your answers to these questions in a lab09.txt file in the root of your lab repo.
