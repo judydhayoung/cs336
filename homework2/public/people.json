@@ -30,21 +30,15 @@
     "startDate": "2013-11-28"
   },
   {
-    "firstName": "Dhayoung",
-    "lastName": "Kwon",
-    "loginID": "dkwon",
-    "startDate": "2033-3-4"
+    "firstName": "success",
+    "lastName": "yes",
+    "loginID": "changed",
+    "startDate": "2000"
   },
   {
-    "firstName": "another",
-    "lastName": "new person",
-    "loginID": "dsasdf",
-    "startDate": "2033-3-4"
-  },
-  {
-    "firstName": "asdf",
-    "lastName": "sdf",
-    "loginID": "2",
-    "startDate": "2033-3-4"
+    "firstName": "judy",
+    "lastName": "kwon",
+    "loginID": "bbb",
+    "startDate": 2000
   }
 ]

@@ -32,60 +32,92 @@ app.get('/people', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/addPerson.html'));
   });
 
-  /**
-   * get the full record for the person with the given ID
-   * put method for updates
-   */
-  app.post('/people', (req, res) => {
-    console.log(req.params, "req.params");
-    console.log(req.body, "req.body");
+/**
+ * get the full record for the person with the given ID
+ * put method for updates
+ */
+app.post('/people', (req, res) => {
+  console.log(req.params, "req.params");
+  console.log(req.body, "req.body");
 
-    // Create new record
-    let newPerson = {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      loginID: req.body.loginID,
-      startDate: req.body.startDate
-    }
-    console.log('people before add', people);
-    people[people.length] = newPerson; // OR people.push(newPerson);
-    res.sendStatus(201);
-    console.log('people after add', people);
+  // Create new record
+  let newPerson = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    loginID: req.body.loginID,
+    startDate: req.body.startDate
+  }
+  console.log('people before add', people);
+  people[people.length] = newPerson; // OR people.push(newPerson);
+  res.sendStatus(201);
+  console.log('people after add', people);
 
-    var json = JSON.stringify(people, null, 2);
-    fs.writeFile('public/people.json', json, function (err){
-    if (err) throw err;
-      console.log('Wrote to file public/people.json');
-    });
-    });
+  var json = JSON.stringify(people, null, 2);
+  fs.writeFile('public/people.json', json, function (err){
+  if (err) throw err;
+    console.log('Wrote to file public/people.json');
+  });
+});
 
 /**
  * get the full record for the person with the given ID
+ * (notes:)
+ * if person couldn't be found: res.sendStatus(404);
+ *
+ * res.sendFile(path.join(__dirname, '/public/getPerson.html'));
  */
+
 app.get('/person/:id', function (req, res) {
-    console.log("/person/" + req.params.id + " requested");
-    
-    res.sendFile(path.join(__dirname, '/public/getPerson.html'));
-  });
+  console.log("/person/" + req.params.id + " requested");
+
+  for (const person of people) {
+      if (person['loginID'] == req.params.id)
+        res.json(person);
+  }
+});
 
 /**
  * update the full record for the person with the given ID
  * put method is for update
  */
 app.put('/person/:id', function (req, res) {
-
-    res.send('Oh you sent a POST request!\n'
-            + 'arg: ' + req.body.arg)
+  for (const person of people) {
+    if (person['loginID'] == req.params.id) {
+      console.log("Updating", person, "from people.json");
+      person['firstName'] = req.body.firstName;
+      person['lastName'] = req.body.lastName;
+      person['loginID'] = req.body.loginID;
+      person['startDate'] = req.body.startDate;
+      console.log("successfully deleted!");
+      console.log(people);
+      fs.writeFile('public/people.json', JSON.stringify(people, null, 2), function (err){
+        if (err) throw err;
+      });
+      console.log('Updated person with id', req.params.id, 'and saved changes in public/people.json');
+      res.sendStatus(200);
+    }
+  }
   });
 
 /**
  * delete the full record for the person with the given ID
  */
 app.delete('/person/:id', function (req, res) {
-  for (const person of peopleData) {
-    if (person['loginID'] == req.params.id)
+  // let ind = getIndex(req.params.id);
+  console.log("looking for person with id ", req.params.id);
+  for (const person of people) {
+    if (person['loginID'] == req.params.id) {
+      var index = people.indexOf(person);
       console.log("Deleting", person, "from people.json")
-      delete peopleData.person;
+      people.splice(index,1);
+      console.log(people);
+      console.log("successfully deleted!");
+      fs.writeFile('public/people.json', JSON.stringify(people, null, 2), function (err){
+        if (err) throw err;
+      });
+      console.log('Deleted person with id', req.params.id, 'and saved changes in public/people.json');
+      res.sendStatus(200);
+    }
   }
 });
 
@@ -95,7 +127,7 @@ app.delete('/person/:id', function (req, res) {
  */
 
 app.get('/person/:id/name', function (req, res) {
-  for (const person of peopleData) {
+  for (const person of people) {
       if (person['loginID'] == req.params.id)
         res.send(person.firstName + " " + person.lastName);
     }
@@ -104,7 +136,7 @@ app.get('/person/:id/name', function (req, res) {
 
 // the seniority (i.e., number of years with the organization) of the person with the given ID
 app.get('/person/:id/years', function (req, res) {
-  for (const person of peopleData) {
+  for (const person of people) {
       if (person['loginID'] == req.params.id) {
         //accessor method that computes age; cf.a pretty decent function for this from Naveen Jose.)
         //function copied from http://jsfiddle.net/codeandcloud/n33RJ/

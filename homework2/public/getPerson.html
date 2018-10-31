@@ -10,33 +10,15 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="getPerson.js"></script>
 
-    <div id="people">
-      <h1>People</h1>
-    </div>
-
-    <p> Add person</p>
+    <h1> Look up person</h1>
     <!-- form code from lab06 -->
-    <form action="/forms" method="post">
-      <div>
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" placeholder="Moses">
-      </div>
-      <div>
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" placeholder="Bloch">
-      </div>
+    <form>
       <div>
         <label for="loginID">ID:</label>
         <input type="text" id="loginID" name="loginID" placeholder="mbloch">
-      </div>
-      <div>
-        <label for="startDate">Start Date:</label>
-        <input type="text" id="startDate" name="startDate" placeholder="2018-10-3">
-      </div>
-      <div class="button">
         <button type="submit">Submit</button>
       </div>
     </form>
-
+    <div id="getPerson"></div>
 </body>
 </html>
