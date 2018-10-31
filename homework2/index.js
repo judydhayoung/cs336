@@ -37,26 +37,24 @@ app.get('/people', (req, res) => {
  * put method for updates
  */
 app.post('/people', (req, res) => {
-  console.log(req.params, "req.params");
-  console.log(req.body, "req.body");
 
-  // Create new record
+  // Create new array of new data
   let newPerson = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     loginID: req.body.loginID,
     startDate: req.body.startDate
   }
-  console.log('people before add', people);
-  people[people.length] = newPerson; // OR people.push(newPerson);
-  res.sendStatus(201);
-  console.log('people after add', people);
 
-  var json = JSON.stringify(people, null, 2);
-  fs.writeFile('public/people.json', json, function (err){
-  if (err) throw err;
-    console.log('Wrote to file public/people.json');
-  });
+  people[people.length] = newPerson; // OR people.push(newPerson);
+  fs.writeFile('public/people.json',
+   JSON.stringify(people, null, 2),
+    function (err){
+      if (err) throw err;
+      console.log('Wrote to file public/people.json');
+    });
+  res.sendStatus(201);
+
 });
 
 /**
@@ -89,7 +87,6 @@ app.put('/person/:id', function (req, res) {
       person['loginID'] = req.body.loginID;
       person['startDate'] = req.body.startDate;
       console.log("successfully deleted!");
-      console.log(people);
       fs.writeFile('public/people.json', JSON.stringify(people, null, 2), function (err){
         if (err) throw err;
       });
@@ -103,15 +100,12 @@ app.put('/person/:id', function (req, res) {
  * delete the full record for the person with the given ID
  */
 app.delete('/person/:id', function (req, res) {
-  // let ind = getIndex(req.params.id);
-  console.log("looking for person with id ", req.params.id);
   for (const person of people) {
     if (person['loginID'] == req.params.id) {
-      var index = people.indexOf(person);
       console.log("Deleting", person, "from people.json")
+      var index = people.indexOf(person);
       people.splice(index,1);
-      console.log(people);
-      console.log("successfully deleted!");
+
       fs.writeFile('public/people.json', JSON.stringify(people, null, 2), function (err){
         if (err) throw err;
       });
