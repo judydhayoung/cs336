@@ -1,18 +1,16 @@
 $(document).ready(function() {
   console.log("in addPerson.js"); //console test
-for (const person of peopleData) {
+  $.getJSON('people.json', function(data){
+    $.each(data, function(i, user){
+      $('#people').append('<li>'+user.firstName+ ' ' + user.lastName + '</li>');
+      if ()
+    });
+
+  for (const person of data) {
     if (person['loginID'] == req.params.id)
     // if (peopleData.loginID == req.params.id)
       res.json(person);
 }
-
-
-  $.getJSON('people.json', function(data){
-    $.each(data, function(i, user){
-      $('#people').append('<li>'+user.firstName+ ' ' + user.lastName + '</li>');
-    });
-  });
-
 
   var fname = $("#firstName").val();
   var lname = $("#lastName").val();
@@ -20,8 +18,6 @@ for (const person of peopleData) {
   var startdate = $("#startDate").val();
   console.log("New person: " + fname + " " + lname + " " + loginid + " " + startdate);
   $("#newPerson").html(fname + " " + lname + " " + loginid + " " + startdate);
-
-
 
   $( 'form' ).submit(function( event ) {
     event.preventDefault();

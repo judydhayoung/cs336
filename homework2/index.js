@@ -2,49 +2,19 @@ var express = require('express');
 const port = 3000;
 var app = express();
 var path = require('path');
-const fs = require('fs');
+var fs = require('fs');
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.listen(port, function () {
     console.log("Server is running on port "+ port);
 });
 
 app.use(express.static('public'));
-var peopleData = require("./public/people.json");
-// let file = fs.readFile('public/people.json');
-// let peopleData = JSON.parse(rawdata);
-
-// var peopleData = [
-//   {
-//   "firstName":"Moses",
-//   "lastName":"Bloch",
-//   "loginID": "mbloch",
-//   "startDate": "2010-06-28"
-// },
-// {
-//   "firstName":"Marissa",
-//   "lastName":"Hardrick",
-//   "loginID": "mhardrick",
-//   "startDate": "2012-12-27"
-// },
-// {
-//   "firstName":"Claudette",
-//   "lastName":"Ferrel",
-//   "loginID": "cferrel",
-//   "startDate": "2013-10-02"
-// },
-// {
-//   "firstName":"Giovanni",
-//   "lastName":"Jump",
-//   "loginID": "gjump",
-//   "startDate": "2016-01-13"
-// },
-// {
-//   "firstName":"Lucille",
-//   "lastName":"Bran",
-//   "loginID": "lbran",
-//   "startDate": "2013-11-28"
-// }
-// ]
+var peopleData = fs.readFileSync('public/people.json');
+var people = JSON.parse(peopleData);
 
 app.get('/', (req, res) => {
     res.send(
@@ -59,7 +29,6 @@ app.get('/', (req, res) => {
  * a list of all people objects
  */
 app.get('/people', (req, res) => {
-  //res.json(JSON.parse(data));
   res.sendFile(path.join(__dirname, '/public/addPerson.html'));
   });
 
@@ -68,7 +37,26 @@ app.get('/people', (req, res) => {
    * put method for updates
    */
   app.post('/people', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/addPerson.html'));
+    console.log(req.params, "req.params");
+    console.log(req.body, "req.body");
+
+    // Create new record
+    let newPerson = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      loginID: req.body.loginID,
+      startDate: req.body.startDate
+    }
+    console.log('people before add', people);
+    people[people.length] = newPerson; // OR people.push(newPerson);
+    res.sendStatus(201);
+    console.log('people after add', people);
+
+    var json = JSON.stringify(people, null, 2);
+    fs.writeFile('public/people.json', json, function (err){
+    if (err) throw err;
+      console.log('Wrote to file public/people.json');
+    });
     });
 
 /**
@@ -76,13 +64,15 @@ app.get('/people', (req, res) => {
  */
 app.get('/person/:id', function (req, res) {
     console.log("/person/" + req.params.id + " requested");
+    
     res.sendFile(path.join(__dirname, '/public/getPerson.html'));
   });
 
 /**
  * update the full record for the person with the given ID
+ * put method is for update
  */
-app.post('/person/:id', function (req, res) {
+app.put('/person/:id', function (req, res) {
 
     res.send('Oh you sent a POST request!\n'
             + 'arg: ' + req.body.arg)
