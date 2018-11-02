@@ -1,17 +1,34 @@
 1. What good has this bundling done? How big is the new bundle file? Check the Chrome DevTools network log to see what files are being loaded.
-The new bundle file is 243Bytes big. It reduces size and ...?
+The new bundle file is 243Bytes big. It reduces size and time of loading the page.
 
 2. What role did Babel play in the bundling?
+Webpack calls .babelrc which specifies ES2015 and react. Babel allows use of different versions of JS as well as React's jsx.
 
 3. Can you just load file:///path…/index.html using the browser? Why or why not?
-can't load because
-
-it's not static?
+can't load because the files are not static. They require the server to compile webpack and display bundle.js which contains styling and content.
 
 4. In webpack.config.js, what does the loader test entry test: /\.jsx?$/ do?
-
+loads babel-loader to run jsx, excluding node_modules.
 
 9.2
 1. Check out the new dist/index.html and dist/bundle.js. How are they different from the previous versions?
+
 2. What good is it to replace the CDN library loads with module imports?
+  It is much faster to do module imports. Bundling reduces the number of TCP connections needed to download external content (JavaScript/CSS).
+  If your bundler also minifies the content, it additionally reduces the number of bytes the client needs to fetch.
+
 3. Check the network log. How many of the new modules you built are being loaded? How about the CSS file?
+  They are not in the log because they are included in bundle.js.
+
+9.3
+
+1.Try out both ports and explain the difference between them.
+- localhost:3001 — Try editing one of the React module files. Explain what happens, both to the displayed SPA webpage and to the bundle/index files.
+  both bundle/index file and displayed SPA reflect the change in the js script and in the browser.
+
+- localhost:3000 — Try loading /api/comments. Explain what you get. Does the SPA page running on this port change (due to the edits made above) as well?
+  I get json formatted comments. The SPA page also reflect the changes.
+
+For more information on this two-server configuration, see Webpack’s HMR & React-Hot-Loader — The Missing Manual.
+- Is it worth all this trouble to build a development configuration?
+  Yes because it spins up client server and back-end server at the same time, and reduce the time to recompile and restart after every change.
