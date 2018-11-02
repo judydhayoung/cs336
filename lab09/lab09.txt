@@ -1,7 +1,17 @@
-What good has this bundling done? How big is the new bundle file? Check the Chrome DevTools network log to see what files are being loaded.
+1. What good has this bundling done? How big is the new bundle file? Check the Chrome DevTools network log to see what files are being loaded.
+The new bundle file is 243Bytes big. It reduces size and ...?
 
-What role did Babel play in the bundling?
+2. What role did Babel play in the bundling?
 
-Can you just load file:///path…/index.html using the browser? Why or why not?
-In webpack.config.js, what does the loader test entry test: /\.jsx?$/ do?
-Save your answers to these questions in a lab09.txt file in the root of your lab repo.
+3. Can you just load file:///path…/index.html using the browser? Why or why not?
+can't load because
+
+it's not static?
+
+4. In webpack.config.js, what does the loader test entry test: /\.jsx?$/ do?
+
+
+9.2
+1. Check out the new dist/index.html and dist/bundle.js. How are they different from the previous versions?
+2. What good is it to replace the CDN library loads with module imports?
+3. Check the network log. How many of the new modules you built are being loaded? How about the CSS file?
