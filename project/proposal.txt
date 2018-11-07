@@ -1,0 +1,12 @@
+I want to make a platform for textbook exchange at Calvin.
+We currently use facebook to upload photos of books. But it is a pain to look through the pictures,
+and the facebook group's search function cannot read the name of book if it's not in the description.
+A webapp for textbook exchange would make things easier.
+It would include fields for textbook name, course, professor (optional), and price (optional).
+Some people prefer to negotiate the price so they don't upload it which is fine.
+It would also have information about the seller's name and contact information.
+  - everyone would have to create an account to use this, either to sell or buy
+  - additional feature would be to connect the user's profile to Facebook and automatically import the name and contact info.
+
+No particular people to avoid working with, but would like to work with people I've never worked with.
+A mixed group of personalities and cs skills where I can contribute and learn from others.
