@@ -1,0 +1,3 @@
+Compare and contrast MongoDB and the SQL databases you’ve used before. Are there things that one can do that the other can’t?
+You could run MongoDB locally. What advantages and/or disadvantages would that bring with respect to the cloud database you have now?
+You’ve built a “sandbox” database on mLab. Could you use this for a production database? Why or why not?
