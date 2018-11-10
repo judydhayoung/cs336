@@ -16,30 +16,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
-/*
-* MongoDB import v3
- */
-var MongoClient = require('mongodb').MongoClient;
-
-// 'mongodb://cs336:process.env.MONGO_PASSWORD@ds035747.mlab.com:35747/cs336'
-var url = 'mongodb://cs336:' + process.env.MONGO_PASSWORD + '@ds035747.mlab.com:35747/cs336';
-MongoClient.connect(url, function (err, client) {
-  if (err) throw err
-
-  var db = client;
-
-  db.collection('comments').find().toArray(function (err, result) {
-    if (err) throw err
-
-    console.log(result)
-  })
-  app.listen(app.get('port'), function() {
-      console.log('Server started: http://localhost:' + app.get('port') + '/');
-  });
-});
-
-var COMMENTS_FILE = path.join(__dirname, 'comments.json');
-
 app.set('port', (process.env.PORT || 3000));
 
 app.use('/', express.static(path.join(__dirname, 'dist')));
@@ -57,39 +33,55 @@ app.use(function(req, res, next) {
     next();
 });
 
+/*
+* MongoDB setup v3
+ */
+var MongoClient = require('mongodb').MongoClient;
+var db;
+var collection;
+var people;
+
+var url = 'mongodb://cs336:' + process.env.MONGO_PASSWORD + '@ds035747.mlab.com:35747/cs336';
+MongoClient.connect(url, function (err, client) {
+  if (err) throw err;
+  db = client;
+  collection = db.collection('comments');
+  var findPeople = collection.find().toArray(function (err, result) {
+    if (err) throw err
+    console.log(result)
+  });
+  app.listen(app.get('port'), function() {
+      console.log('Server started: http://localhost:' + app.get('port') + '/');
+  });
+});
+
+
+/*
+ * read from database
+ */
+
 app.get('/api/comments', function(req, res) {
-    fs.readFile(COMMENTS_FILE, function(err, data) {
-        if (err) {
-            console.error(err);
-            process.exit(1);
-        }
-        res.json(JSON.parse(data));
-    });
+  collection.find().toArray(function (err, result) {
+    if (err) throw err
+    console.log("Found the following records");
+    console.log(result);
+    res.json(result);
+  })
 });
 
 app.post('/api/comments', function(req, res) {
-    fs.readFile(COMMENTS_FILE, function(err, data) {
-        if (err) {
-            console.error(err);
-            process.exit(1);
-        }
+  var newComment = {
+      id: Date.now(),
+      author: req.body.author,
+      text: req.body.text,
+  };
 
-        var comments = JSON.parse(data);
-        // NOTE: In a real implementation, we would likely rely on a database or
-        // some other approach (e.g. UUIDs) to ensure a globally unique id. We'll
-        // treat Date.now() as unique-enough for our purposes.
-        var newComment = {
-            id: Date.now(),
-            author: req.body.author,
-            text: req.body.text,
-        };
-        comments.push(newComment);
-        fs.writeFile(COMMENTS_FILE, JSON.stringify(comments, null, 4), function(err) {
-            if (err) {
-                console.error(err);
-                process.exit(1);
-            }
-            res.json(comments);
-        });
-    });
+  collection.insertOne(newComment, function(err, result) {
+    if (err) throw err;
+    db.collection("comments").find({}).toArray(function(err, docs) {
+       if (err) throw err;
+       console.log("Inserted the document with the field author: ", req.body.author);
+       res.json(docs);
+     });
+  });
 });

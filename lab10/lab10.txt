@@ -1,3 +1,21 @@
-Compare and contrast MongoDB and the SQL databases you’ve used before. Are there things that one can do that the other can’t?
-You could run MongoDB locally. What advantages and/or disadvantages would that bring with respect to the cloud database you have now?
-You’ve built a “sandbox” database on mLab. Could you use this for a production database? Why or why not?
+i. Compare and contrast MongoDB and the SQL databases you’ve used before. Are there things that one can do that the other can’t?
+mysql has 'show columns', or 'show tables' that can automatically just sort out specific metadata. mongoDB has find() but it's not as convenient as sql.
+some sql servers also have begin transaction and rollback, which are more convenient to undo changes in the database.
+
+ii. You could run MongoDB locally. What advantages and/or disadvantages would that bring with respect to the cloud database you have now?
+I would have to run MongoDB manually on the local machine, whereas the cloud database is always on and can be uploaded to the most accurate data.
+Cloud database will prevent data loss if something happens to my computer.
+
+iii. You’ve built a “sandbox” database on mLab. Could you use this for a production database? Why or why not?
+It probably could be used for production...? since it's updated to the most recent records of comments.
+However it should be better to have a dev server to develop on, so that real data won't get lost.
+
+i. For this integration of mLab into your application, was it better to run the modified server (npm start) or the full Webpack development environment (npm run dev)? Why?
+'npm run dev' was definitely better because it automatically recognized newly installed modules and updated itself on the run.
+Also I didn't have to restart the server every time it failed so it facilitated developing.
+
+ii. Explain what happens when you modify the database using mLab’s web interface rather than your application? Try adding/updating/deleting comment documents.
+Updating and deleting comments are a lot easier with mLab's UI- actually it's only possible with UI at the moment. It also validates field information when creating a document, and alerts the user to change, add double quotes, etc.
+
+iii. Is this comments application the sort of application that should use an SQL or a noSQL database? Explain your answer.
+This comments application could use a SQL database since all of its fields are consistent. MongoDB is not a bad option because at the moment the UI only requires adding and reading comments, and mongoDB seems to run pretty quickly.
