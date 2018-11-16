@@ -1,0 +1,7 @@
+
+a. Compare and contrast your development and production deployments and explain how each is designed.
+For production servers, security and efficiency is more important.
+Development server is designed to
+Production server is designed to 
+b. List the optimizations you’ve configured for this production version and, if possible, find evidence of then in the deployed application files.
+Uglify distorts and encrypts the data. Instead of hot module replacement, it updates server according to occurrence order. It extracts text and auto-prefixing.
