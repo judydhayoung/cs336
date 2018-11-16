@@ -1,7 +1,16 @@
 
 a. Compare and contrast your development and production deployments and explain how each is designed.
-For production servers, security and efficiency is more important.
-Development server is designed to
-Production server is designed to 
+Production servers are designed for security and efficiency. There is encryption, and bundling files to reduce load-time. Speed is very important to servers because users don't want to wait long for a page to load.
+Development servers are designed for development work and checking changes efficiently. It requires less work to deploy or check the output of the code.
+
 b. List the optimizations you’ve configured for this production version and, if possible, find evidence of then in the deployed application files.
-Uglify distorts and encrypts the data. Instead of hot module replacement, it updates server according to occurrence order. It extracts text and auto-prefixing.
+Uglify distorts and encrypts the data.
+Instead of hot module replacement, it updates server according to occurrence order. It extracts text and auto-prefixes css to be compatible for any browser.
+
+
+a. What advantage is there is deploying an application to a PaaS tool like Heroku?
+Heroku is a cloud-based development platform as a service (PasS) provider, which simplifies the deployment process for developers.
+It is easy to setup because it abstracts the infrastructure work needed for deployment. It reads the code from GitHub so there is no risk, additional work of migrating data manually, or installing dependencies manually in production environment.
+
+b. How does Heroku know how to install and run your application (after pulling it from the specified branch on GitHub)?
+It detects npm scripts in package.json and install required dependencies. It also uses a buildpack, which are composed of a set of scripts, and depending on the programming language, the scripts will retrieve dependencies, output generated assets or compiled code, and more.
