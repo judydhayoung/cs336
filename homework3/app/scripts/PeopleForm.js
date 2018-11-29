@@ -1,6 +1,6 @@
 import React from 'react';
-
 import People from './People.js';
+import PeopleList from './PeopleList.js';
 
 module.exports = React.createClass({
   getInitialState: function() {
@@ -27,17 +27,22 @@ module.exports = React.createClass({
     if (!firstName || !lastName || !loginID || !startDate) {
       return;
     }
-    this.props.onCommentSubmit({firstName: firstName, lastName: lastName, loginID: loginID, startDate: startDate});
+    this.props.onPersonSubmit({firstName: firstName, lastName: lastName, loginID: loginID, startDate: startDate});
     this.setState({firstName: '', lastName: '', loginID: '', startDate: ''});
   },
   render: function() {
     return (
       <form className="peopleForm" onSubmit={this.handleSubmit}>
-        <input type="text"placeholder="First Name" value={this.state.firstName} onChange={this.handleFirstNameChange}/>
-        <input type="text" placeholder="Last Name" value={this.state.lastName} onChange={this.handleLastNameChange}/>
-        <input type="text"placeholder="Login ID" value={this.state.loginID} onChange={this.handleLoginIDChange}/>
-        <input type="text"placeholder="Start Date" value={this.state.startDate} onChange={this.handleStartDateChange}/>
-        <input type="submit" value="Post" />
+        <h3>To add a new person to the list:</h3> <br/>
+        First Name: <input type="text"placeholder="First Name" value={this.state.firstName} onChange={this.handleFirstNameChange}/>
+        <br/>
+        Last Name: <input type="text" placeholder="Last Name" value={this.state.lastName} onChange={this.handleLastNameChange}/>
+        <br/>
+        Login ID: <input type="text"placeholder="Login ID" value={this.state.loginID} onChange={this.handleLoginIDChange}/>
+        <br/>
+        Start Date: <input type="text"placeholder="Start Date" value={this.state.startDate} onChange={this.handleStartDateChange}/>
+        <br/>
+        <input type="submit" value="Add" />
         </form>
     );
   }

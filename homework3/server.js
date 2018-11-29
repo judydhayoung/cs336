@@ -60,10 +60,9 @@ MongoClient.connect(url, function (err, client) {
  */
 
 app.get('/people', function(req, res) {
-  collection.find().toArray(function (err, result) {
+  collection.find({}).toArray(function (err, result) {
     if (err) throw err
-    console.log("Found the following records");
-    console.log(result);
+    console.log("Found the following records", result);
     res.json(result);
   })
 });
@@ -82,13 +81,10 @@ app.post('/people', (req, res) => {
     startDate: req.body.startDate
   }
   collection.insertOne(newPerson, function(err, result) {
-    if (err) throw err;
-    collection.find({}).toArray(function(err, docs) {
-       if (err) throw err;
-       console.log("Inserted the document with the field author: ", req.body.author);
-       res.json(docs);
-     });
-  });
+    if (err) throw err
+    console.log("Inserted new person");
+    res.json(result);
+    });
 });
 
 /**
@@ -98,7 +94,7 @@ app.post('/people', (req, res) => {
 
 app.get('/person/:id', function (req, res) {
   console.log("/person/" + req.params.id + " requested");
-  let result = collection.find({loginID: req.params.id}).toArray(function (err, docs) {
+  collection.find({loginID: req.params.id}).toArray(function (err, docs) {
     if (err) throw err
     console.log("docs", docs)
     res.json(docs);
@@ -125,54 +121,52 @@ app.put('/person/:id', function (req, res) {
  * delete the full record for the person with the given ID
  */
 app.delete('/person/:id', function (req, res) {
-  for (const person of people) {
-    if (person['loginID'] == req.params.id) {
-      console.log("Deleting", person, "from people.json")
-      var index = people.indexOf(person);
-      people.splice(index,1);
-
-      fs.writeFile('public/people.json', JSON.stringify(people, null, 2), function (err){
-        if (err) throw err;
-      });
-      console.log('Deleted person with id', req.params.id, 'and saved changes in public/people.json');
-      res.sendStatus(200);
+  let result = collection.deleteOne({loginID: req.params.id}, function(err, result) {
+    if (err) throw err;
+    if (result.deletedCount != 1) {
+      res.status(404).json('deletion unsuccessful');
     }
-  }
+    else {
+      res.status(200).json('deletion successful');
+    }
+  });
 });
 
 /**
  * the full name (i.e., first & last concatenated into one string)
  * for the person with the given ID
  */
-
 app.get('/person/:id/name', function (req, res) {
-  for (const person of people) {
-      if (person['loginID'] == req.params.id)
-        res.send(person.firstName + " " + person.lastName);
+  collection.findOne({loginID: req.params.id}, function (err, docs) {
+    if (err) throw err;
+    if (!docs) {
+      res.status(200).json('full name : ' + docs.firstName + ' ' + docs.lastName);
     }
-    res.sendStatus(404);
+  });
+  res.status(404);
 });
 
-// the seniority (i.e., number of years with the organization) of the person with the given ID
+/*
+* the seniority (i.e., number of years with the organization) of the person with the given ID
+*/
 app.get('/person/:id/years', function (req, res) {
-  for (const person of people) {
-      if (person['loginID'] == req.params.id) {
-        //accessor method that computes age; cf.a pretty decent function for this from Naveen Jose.)
-        //function copied from http://jsfiddle.net/codeandcloud/n33RJ/
-        const years = function () {
-          var today = new Date();
-          var personStartDate = new Date(person.startDate);
-          var years = today.getFullYear() - personStartDate.getFullYear();
-          var m = today.getMonth() - personStartDate.getMonth();
-          if (m < 0 || (m === 0 && today.getDate() < personStartDate.getDate())) {
-              years--;
-            }
-            return years;
-          }
-          console.log(person.firstName + " has " + years() + "years in the organization");
-        res.send(person.firstName + " started in year " + person.startDate.substring(0,4) +
-         " and has " + years() + " years in the organization.");
+  collection.findOne({loginID: req.params.id}, function (err, person) {
+    if (err) throw err;
+    //accessor method that computes age; cf.a pretty decent function for this from Naveen Jose.)
+    //function copied from http://jsfiddle.net/codeandcloud/n33RJ/
+    const years = function () {
+      var today = new Date();
+      var personStartDate = new Date(person.startDate);
+      var years = today.getFullYear() - personStartDate.getFullYear();
+      var m = today.getMonth() - personStartDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < personStartDate.getDate())) {
+          years--;
         }
-    }
-    res.sendStatus(404);
+        return years;
+      }
+      console.log(person.firstName + " has " + years() + "years in the organization");
+    res.send(person.firstName + " started in year " + person.startDate.substring(0,4) +
+     " and has " + years() + " years in the organization.");
+  });
+  res.status(404);
 });

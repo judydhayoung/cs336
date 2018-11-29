@@ -1,9 +1,8 @@
 import React from 'react';
-import Remarkable from 'remarkable';
 import $ from 'jquery';
 
-import List from './PeopleList.js';
-import PeopleForm from './PeopleForm.js';
+import PeopleList from './PeopleList';
+import PeopleForm from './PeopleForm';
 
 module.exports = React.createClass({
   loadPeopleFromServer: function() {
@@ -20,7 +19,6 @@ module.exports = React.createClass({
     });
   },
   handlePeopleSubmit: function(person) {
-    // TODO: submit to the server and refresh the list
     var people = this.state.data;
     var newPerson = people.concat([person]);
     this.setState({data: newPerson});
@@ -50,7 +48,7 @@ module.exports = React.createClass({
       <div className="peopleBox">
         <h1>People</h1>
         <PeopleList data={this.state.data} />
-        <PeopleForm onCommentSubmit={this.handlePeopleSubmit} />
+        <PeopleForm onPersonSubmit={this.handlePeopleSubmit} />
       </div>
     );
   }

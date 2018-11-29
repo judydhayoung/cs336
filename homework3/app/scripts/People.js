@@ -14,15 +14,12 @@ module.exports = React.createClass({
     return (
       <div className="people">
         <h2 className="name">
-          {this.props.firstName, this.props.lastName} //, this.props.lastName}
+          {this.props.firstName} {this.props.lastName}
         </h2>
-        <p clasName="loginID">
-          Login ID: {this.props.loginID}
+        <p>
+          Login ID: {this.props.loginID} <br />
+          Start Date: {this.props.startDate}
         </p>
-        <p className="startDate">
-          Login ID: {this.props.startDate}
-        </p>
-        // <span dangerouslySetInnerHTML={this.rawMarkup()} />
       </div>
     );
   }
